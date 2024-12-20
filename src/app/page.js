@@ -8,43 +8,69 @@ import Confetti from 'react-confetti'
 
 const RockPaper = () => {
   const [userChoice, setUserChoice] = useState(null)
+  const [computerChoice, setComputerChoice] = useState(null)
+
   const handleChange = (choice) => {
     setUserChoice(choice)
+    const randomNum = Math.floor(Math.random() * choices.length)
+    setComputerChoice(choices[randomNum].name)
   }
+
   const choices = [
     { name: 'rock', icon: <FaRegHandRock size={100} onClick={() => handleChange('rock')} /> },
     { name: 'paper', icon: <FaRegHandPaper size={100} onClick={() => handleChange('paper')} /> },
     { name: 'scissor', icon: <FaRegHandScissors size={100} onClick={() => handleChange('scissor')} /> },
   ]
-  const randomNum = Math.floor(Math.random() * choices.length)
+
   const confetti = <Confetti
     width={1300}
     height={300}
   />
+
+  const getBackgroundColor = (choice) => {
+    if (choice === userChoice || choice === computerChoice) {
+      return 'bg-yellow-700'; // Dark gold
+    }
+    return 'bg-white';
+  }
+
   return (
     <div>
       <div className='flex gap-6  m-4 p-4 items-center'>
-        <div className='bg-pink-100 shadow-lg  w-[50%] h-72'>Computer
-          {userChoice && choices[randomNum].icon}
-          {userChoice && choices[randomNum].name}
-
+        <div className='bg-pink-100 shadow-lg w-[50%] h-72 flex flex-col items-center justify-center'>
+          <p>Computer</p>
+          {computerChoice && (
+            <div
+              className={`rounded-full p-6 ${getBackgroundColor(computerChoice)}`}
+            >
+              {choices.find((choice) => choice.name === computerChoice).icon}
+            </div>
+          )}
+          <p>{computerChoice}</p>
         </div>
         <div className='flex gap-4 justify-center items-center bg-green-100 shadow-lg 
              rounded-xl w-[50%] h-72'>
-          {userChoice}
           {choices.map((item) => {
-            return <div className='bg-white  border-black border-8 rounded-3xl p-3'>
-              {item.icon}</div>
+            return (
+              <div
+                key={item.name}
+                className={`border-black border-8 rounded-3xl p-3 ${getBackgroundColor(item.name)}`}
+              >
+                {item.icon}
+              </div>
+            )
           })}
         </div>
       </div>
-      {choices[randomNum].name === userChoice && "DRAW"}
-      {choices[randomNum].name === 'paper' && userChoice === 'rock' && "You lost"}
-      {choices[randomNum].name === 'scissor' && userChoice === 'paper' && "You lost"}
-      {choices[randomNum].name === 'rock' && userChoice === 'scissor' && "You lost"}
-      {choices[randomNum].name === 'rock' && userChoice === 'paper' && confetti}
-      {choices[randomNum].name === 'paper' && userChoice === 'scissor' && confetti}
-      {choices[randomNum].name === 'scissor' && userChoice === 'rock' && confetti}
+      <div className='text-center text-xl font-bold'>
+        {computerChoice === userChoice && "DRAW"}
+        {computerChoice === 'paper' && userChoice === 'rock' && "You lost"}
+        {computerChoice === 'scissor' && userChoice === 'paper' && "You lost"}
+        {computerChoice === 'rock' && userChoice === 'scissor' && "You lost"}
+        {computerChoice === 'rock' && userChoice === 'paper' && confetti}
+        {computerChoice === 'paper' && userChoice === 'scissor' && confetti}
+        {computerChoice === 'scissor' && userChoice === 'rock' && confetti}
+      </div>
     </div>
   )
 }
