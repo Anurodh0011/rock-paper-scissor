@@ -25,11 +25,11 @@ const RockPaper = () => {
   const confetti = <Confetti width={1300} height={300} />
 
   const getUserChoiceClass = (choice) => {
-    return choice === userChoice ? 'bg-yellow-700 text-white' : 'bg-gray-100'
+    return choice === userChoice ? 'bg-yellow-700 text-white' : 'bg-white text-black border-2 border-black'
   }
 
   const getComputerChoiceClass = (choice) => {
-    return choice === computerChoice ? 'bg-yellow-500 text-white' : 'bg-gray-200'
+    return choice === computerChoice ? 'bg-yellow-500 text-white' : 'bg-white text-black border-2 border-black'
   }
 
   const getResultMessage = () => {
@@ -48,7 +48,7 @@ const RockPaper = () => {
   const result = getResultMessage()
 
   return (
-    <div className="p-6 min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white flex flex-col items-center">
+    <div className="p-6 min-h-screen bg-gray-800 text-white flex flex-col items-center">
       <h1 className="text-4xl font-bold mb-6 text-gray-200">Rock Paper Scissors Game</h1>
 
       {/* Main Game Section */}
