@@ -66,18 +66,17 @@ const RockPaper = () => {
           </p>
         </div>
 
-        {/* User Choices Section */}
-        <div className='bg-gray-600 shadow-lg rounded-lg w-[50%] h-80 flex flex-col items-center p-6 border-2 border-gray-500'>
+        {/* User Section */}
+        <div className='bg-gray-600 shadow-lg rounded-lg w-[50%] h-80 flex flex-col items-center justify-center p-6 border-2 border-gray-500'>
           <p className="font-semibold text-lg mb-4 text-gray-300">Your Choices</p>
           <div className="flex gap-6">
             {choices.map((item) => (
               <div
                 key={item.name}
-                className={`w-24 h-24 flex flex-col items-center justify-center rounded-xl shadow-md cursor-pointer hover:scale-105 transition-transform ${getUserChoiceClass(item.name)}`}
+                className={`w-24 h-24 flex items-center justify-center rounded-full shadow-md cursor-pointer hover:scale-105 transition-transform ${getUserChoiceClass(item.name)}`}
                 onClick={() => handleChange(item.name)}
               >
                 {item.icon}
-                <p className="mt-2 text-sm font-semibold">{item.name}</p>
               </div>
             ))}
           </div>
@@ -88,7 +87,7 @@ const RockPaper = () => {
       <div className="mt-8 flex justify-center">
         {result.message && (
           <div
-            className={`p-6 shadow-xl rounded-lg bg-gray-700 text-center w-[80%] md:w-[60%] lg:w-[40%] transition-transform duration-300 ease-in-out border-2 border-gray-600 ${result.color}`}
+            className={`p-6 shadow-xl rounded-lg bg-gray-700 text-center w-[90%] md:w-[80%] lg:w-[70%] transition-transform duration-300 ease-in-out border-2 border-gray-600 ${result.color}`}
           >
             <p className="text-2xl font-bold">{result.message}</p>
             {result.message.includes("You Won!") && confetti}
