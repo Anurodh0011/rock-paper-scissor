@@ -24,12 +24,12 @@ const RockPaper = () => {
 
   const confetti = <Confetti width={1300} height={300} />
 
-  const getUserBackgroundColor = (choice) => {
-    return choice === userChoice ? 'bg-yellow-700' : 'bg-white';
+  const getUserChoiceClass = (choice) => {
+    return choice === userChoice ? 'bg-yellow-700' : 'bg-white'
   }
 
-  const getComputerBackgroundColor = (choice) => {
-    return choice === computerChoice ? 'bg-yellow-500' : 'bg-pink-100';
+  const getComputerChoiceClass = (choice) => {
+    return choice === computerChoice ? 'bg-yellow-500' : 'bg-pink-100'
   }
 
   return (
@@ -40,7 +40,7 @@ const RockPaper = () => {
           <p>Computer</p>
           {computerChoice && (
             <div
-              className={`rounded-full p-6 ${getComputerBackgroundColor(computerChoice)}`}
+              className={`rounded-full p-6 ${getComputerChoiceClass(computerChoice)}`}
             >
               {choices.find((choice) => choice.name === computerChoice).icon}
             </div>
@@ -53,7 +53,7 @@ const RockPaper = () => {
           {choices.map((item) => (
             <div
               key={item.name}
-              className={`border-black border-8 rounded-3xl p-3 cursor-pointer ${getUserBackgroundColor(item.name)}`}
+              className={`border-black border-8 rounded-3xl p-3 cursor-pointer ${getUserChoiceClass(item.name)}`}
               onClick={() => handleChange(item.name)}
             >
               {item.icon}
