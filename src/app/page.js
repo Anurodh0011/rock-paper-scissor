@@ -17,73 +17,78 @@ const RockPaper = () => {
   }
 
   const choices = [
-    { name: 'rock', icon: <FaRegHandRock size={100} /> },
-    { name: 'paper', icon: <FaRegHandPaper size={100} /> },
-    { name: 'scissor', icon: <FaRegHandScissors size={100} /> },
+    { name: 'rock', icon: <FaRegHandRock size={60} /> },
+    { name: 'paper', icon: <FaRegHandPaper size={60} /> },
+    { name: 'scissor', icon: <FaRegHandScissors size={60} /> },
   ]
 
   const confetti = <Confetti width={1300} height={300} />
 
   const getUserChoiceClass = (choice) => {
-    return choice === userChoice ? 'bg-yellow-700' : 'bg-white'
+    return choice === userChoice ? 'bg-yellow-700 text-white' : 'bg-gray-100'
   }
 
   const getComputerChoiceClass = (choice) => {
-    return choice === computerChoice ? 'bg-yellow-500' : 'bg-pink-100'
+    return choice === computerChoice ? 'bg-yellow-500 text-white' : 'bg-gray-200'
   }
 
-  // Determine result message
   const getResultMessage = () => {
     if (!userChoice || !computerChoice) return ""
-    if (computerChoice === userChoice) return { message: "🤝 It's a Draw!", color: "text-gray-600" }
+    if (computerChoice === userChoice) return { message: "🤝 It's a Draw!", color: "text-gray-300" }
     if (
       (computerChoice === 'paper' && userChoice === 'rock') ||
       (computerChoice === 'scissor' && userChoice === 'paper') ||
       (computerChoice === 'rock' && userChoice === 'scissor')
     ) {
-      return { message: "😢 You Lost!", color: "text-red-600" }
+      return { message: "😢 You Lost!", color: "text-red-400" }
     }
-    return { message: "🏆 You Won!", color: "text-green-600" }
+    return { message: "🏆 You Won!", color: "text-green-400" }
   }
 
   const result = getResultMessage()
 
   return (
-    <div className="p-6">
+    <div className="p-6 min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black text-white flex flex-col items-center">
+      <h1 className="text-4xl font-bold mb-6 text-gray-200">Rock Paper Scissors Game</h1>
+
       {/* Main Game Section */}
-      <div className='flex gap-6 m-4 p-4 items-center'>
+      <div className='flex gap-10 w-full max-w-5xl'>
         {/* Computer Section */}
-        <div className='shadow-lg w-[50%] h-72 flex flex-col items-center justify-center'>
-          <p className="font-semibold text-lg">Computer</p>
-          {computerChoice && (
-            <div
-              className={`rounded-full p-6 ${getComputerChoiceClass(computerChoice)}`}
-            >
-              {choices.find((choice) => choice.name === computerChoice).icon}
-            </div>
-          )}
-          <p className="font-medium">{computerChoice}</p>
+        <div className='shadow-lg bg-gray-700 w-[50%] h-80 flex flex-col items-center justify-center rounded-lg p-6 border-2 border-gray-600'>
+          <p className="font-semibold text-lg mb-4 text-gray-300">Computer</p>
+          <div
+            className={`w-24 h-24 flex items-center justify-center rounded-full shadow-md ${getComputerChoiceClass(computerChoice)}`}
+          >
+            {computerChoice && choices.find((choice) => choice.name === computerChoice).icon}
+          </div>
+          <p className="font-medium text-gray-200 mt-4 text-lg">
+            {computerChoice || "Waiting..."}
+          </p>
         </div>
 
         {/* User Choices Section */}
-        <div className='flex gap-4 justify-center items-center bg-green-100 shadow-lg rounded-xl w-[50%] h-72'>
-          {choices.map((item) => (
-            <div
-              key={item.name}
-              className={`border-black border-8 rounded-3xl p-3 cursor-pointer ${getUserChoiceClass(item.name)}`}
-              onClick={() => handleChange(item.name)}
-            >
-              {item.icon}
-            </div>
-          ))}
+        <div className='bg-gray-600 shadow-lg rounded-lg w-[50%] h-80 flex flex-col items-center p-6 border-2 border-gray-500'>
+          <p className="font-semibold text-lg mb-4 text-gray-300">Your Choices</p>
+          <div className="flex gap-6">
+            {choices.map((item) => (
+              <div
+                key={item.name}
+                className={`w-24 h-24 flex flex-col items-center justify-center rounded-xl shadow-md cursor-pointer hover:scale-105 transition-transform ${getUserChoiceClass(item.name)}`}
+                onClick={() => handleChange(item.name)}
+              >
+                {item.icon}
+                <p className="mt-2 text-sm font-semibold">{item.name}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Result Section */}
-      <div className="mt-6 flex justify-center">
+      <div className="mt-8 flex justify-center">
         {result.message && (
           <div
-            className={`p-6 shadow-xl rounded-lg bg-white text-center w-[80%] md:w-[60%] lg:w-[40%] transition-transform duration-300 ease-in-out ${result.color}`}
+            className={`p-6 shadow-xl rounded-lg bg-gray-700 text-center w-[80%] md:w-[60%] lg:w-[40%] transition-transform duration-300 ease-in-out border-2 border-gray-600 ${result.color}`}
           >
             <p className="text-2xl font-bold">{result.message}</p>
             {result.message.includes("You Won!") && confetti}
