@@ -17,26 +17,27 @@ const RockPaper = () => {
   }
 
   const choices = [
-    { name: 'rock', icon: <FaRegHandRock size={100} onClick={() => handleChange('rock')} /> },
-    { name: 'paper', icon: <FaRegHandPaper size={100} onClick={() => handleChange('paper')} /> },
-    { name: 'scissor', icon: <FaRegHandScissors size={100} onClick={() => handleChange('scissor')} /> },
+    { name: 'rock', icon: <FaRegHandRock size={100} /> },
+    { name: 'paper', icon: <FaRegHandPaper size={100} /> },
+    { name: 'scissor', icon: <FaRegHandScissors size={100} /> },
   ]
 
-  const confetti = <Confetti
-    width={1300}
-    height={300}
-  />
+  const confetti = <Confetti width={1300} height={300} />
 
   const getBackgroundColor = (choice) => {
-    if (choice === userChoice || choice === computerChoice) {
-      return 'bg-yellow-700'; // Dark gold
+    if (choice === userChoice) {
+      return 'bg-yellow-700'; // Dark gold for user choice
     }
-    return 'bg-white';
+    if (choice === computerChoice) {
+      return 'bg-yellow-700'; // Dark gold for computer choice
+    }
+    return 'bg-white'; // Default background
   }
 
   return (
     <div>
-      <div className='flex gap-6  m-4 p-4 items-center'>
+      <div className='flex gap-6 m-4 p-4 items-center'>
+        {/* Computer Section */}
         <div className='bg-pink-100 shadow-lg w-[50%] h-72 flex flex-col items-center justify-center'>
           <p>Computer</p>
           {computerChoice && (
@@ -48,20 +49,22 @@ const RockPaper = () => {
           )}
           <p>{computerChoice}</p>
         </div>
-        <div className='flex gap-4 justify-center items-center bg-green-100 shadow-lg 
-             rounded-xl w-[50%] h-72'>
-          {choices.map((item) => {
-            return (
-              <div
-                key={item.name}
-                className={`border-black border-8 rounded-3xl p-3 ${getBackgroundColor(item.name)}`}
-              >
-                {item.icon}
-              </div>
-            )
-          })}
+
+        {/* User Choices Section */}
+        <div className='flex gap-4 justify-center items-center bg-green-100 shadow-lg rounded-xl w-[50%] h-72'>
+          {choices.map((item) => (
+            <div
+              key={item.name}
+              className={`border-black border-8 rounded-3xl p-3 cursor-pointer ${getBackgroundColor(item.name)}`}
+              onClick={() => handleChange(item.name)}
+            >
+              {item.icon}
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Result Section */}
       <div className='text-center text-xl font-bold'>
         {computerChoice === userChoice && "DRAW"}
         {computerChoice === 'paper' && userChoice === 'rock' && "You lost"}
