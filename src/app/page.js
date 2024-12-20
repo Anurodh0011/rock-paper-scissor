@@ -24,25 +24,23 @@ const RockPaper = () => {
 
   const confetti = <Confetti width={1300} height={300} />
 
-  const getBackgroundColor = (choice) => {
-    if (choice === userChoice) {
-      return 'bg-yellow-700'; // Dark gold for user choice
-    }
-    if (choice === computerChoice) {
-      return 'bg-yellow-700'; // Dark gold for computer choice
-    }
-    return 'bg-white'; // Default background
+  const getUserBackgroundColor = (choice) => {
+    return choice === userChoice ? 'bg-yellow-700' : 'bg-white';
+  }
+
+  const getComputerBackgroundColor = (choice) => {
+    return choice === computerChoice ? 'bg-yellow-500' : 'bg-pink-100';
   }
 
   return (
     <div>
       <div className='flex gap-6 m-4 p-4 items-center'>
         {/* Computer Section */}
-        <div className='bg-pink-100 shadow-lg w-[50%] h-72 flex flex-col items-center justify-center'>
+        <div className='shadow-lg w-[50%] h-72 flex flex-col items-center justify-center'>
           <p>Computer</p>
           {computerChoice && (
             <div
-              className={`rounded-full p-6 ${getBackgroundColor(computerChoice)}`}
+              className={`rounded-full p-6 ${getComputerBackgroundColor(computerChoice)}`}
             >
               {choices.find((choice) => choice.name === computerChoice).icon}
             </div>
@@ -55,7 +53,7 @@ const RockPaper = () => {
           {choices.map((item) => (
             <div
               key={item.name}
-              className={`border-black border-8 rounded-3xl p-3 cursor-pointer ${getBackgroundColor(item.name)}`}
+              className={`border-black border-8 rounded-3xl p-3 cursor-pointer ${getUserBackgroundColor(item.name)}`}
               onClick={() => handleChange(item.name)}
             >
               {item.icon}
