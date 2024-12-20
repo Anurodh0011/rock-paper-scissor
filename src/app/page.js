@@ -32,12 +32,29 @@ const RockPaper = () => {
     return choice === computerChoice ? 'bg-yellow-500' : 'bg-pink-100'
   }
 
+  // Determine result message
+  const getResultMessage = () => {
+    if (!userChoice || !computerChoice) return ""
+    if (computerChoice === userChoice) return { message: "🤝 It's a Draw!", color: "text-gray-600" }
+    if (
+      (computerChoice === 'paper' && userChoice === 'rock') ||
+      (computerChoice === 'scissor' && userChoice === 'paper') ||
+      (computerChoice === 'rock' && userChoice === 'scissor')
+    ) {
+      return { message: "😢 You Lost!", color: "text-red-600" }
+    }
+    return { message: "🏆 You Won!", color: "text-green-600" }
+  }
+
+  const result = getResultMessage()
+
   return (
-    <div>
+    <div className="p-6">
+      {/* Main Game Section */}
       <div className='flex gap-6 m-4 p-4 items-center'>
         {/* Computer Section */}
         <div className='shadow-lg w-[50%] h-72 flex flex-col items-center justify-center'>
-          <p>Computer</p>
+          <p className="font-semibold text-lg">Computer</p>
           {computerChoice && (
             <div
               className={`rounded-full p-6 ${getComputerChoiceClass(computerChoice)}`}
@@ -45,7 +62,7 @@ const RockPaper = () => {
               {choices.find((choice) => choice.name === computerChoice).icon}
             </div>
           )}
-          <p>{computerChoice}</p>
+          <p className="font-medium">{computerChoice}</p>
         </div>
 
         {/* User Choices Section */}
@@ -63,14 +80,15 @@ const RockPaper = () => {
       </div>
 
       {/* Result Section */}
-      <div className='text-center text-xl font-bold'>
-        {computerChoice === userChoice && "DRAW"}
-        {computerChoice === 'paper' && userChoice === 'rock' && "You lost"}
-        {computerChoice === 'scissor' && userChoice === 'paper' && "You lost"}
-        {computerChoice === 'rock' && userChoice === 'scissor' && "You lost"}
-        {computerChoice === 'rock' && userChoice === 'paper' && confetti}
-        {computerChoice === 'paper' && userChoice === 'scissor' && confetti}
-        {computerChoice === 'scissor' && userChoice === 'rock' && confetti}
+      <div className="mt-6 flex justify-center">
+        {result.message && (
+          <div
+            className={`p-6 shadow-xl rounded-lg bg-white text-center w-[80%] md:w-[60%] lg:w-[40%] transition-transform duration-300 ease-in-out ${result.color}`}
+          >
+            <p className="text-2xl font-bold">{result.message}</p>
+            {result.message.includes("You Won!") && confetti}
+          </div>
+        )}
       </div>
     </div>
   )
