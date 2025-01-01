@@ -48,32 +48,34 @@ const RockPaper = () => {
   const result = getResultMessage()
 
   return (
-    <div className="p-6 min-h-screen bg-gray-800 text-white flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-6 text-gray-200">Rock Paper Scissors Game</h1>
+    <div className="p-4 md:p-6 min-h-screen bg-gray-800 text-white flex flex-col items-center">
+      <h1 className="text-2xl md:text-4xl font-bold mb-6 text-gray-200 text-center">
+        Rock Paper Scissors Game
+      </h1>
 
       {/* Main Game Section */}
-      <div className='flex gap-10 w-full max-w-5xl'>
+      <div className='flex flex-col md:flex-row gap-6 md:gap-10 w-full max-w-5xl'>
         {/* Computer Section */}
-        <div className='shadow-lg bg-gray-700 w-[50%] h-80 flex flex-col items-center justify-center rounded-lg p-6 border-2 border-gray-600'>
-          <p className="font-semibold text-lg mb-4 text-gray-300">Computer</p>
+        <div className='shadow-lg bg-gray-700 w-full md:w-[50%] h-80 flex flex-col items-center justify-center rounded-lg p-4 md:p-6 border-2 border-gray-600'>
+          <p className="font-semibold text-md md:text-lg mb-4 text-gray-300">Computer</p>
           <div
-            className={`w-24 h-24 flex items-center justify-center rounded-full shadow-md ${getComputerChoiceClass(computerChoice)}`}
+            className={`w-20 md:w-24 h-20 md:h-24 flex items-center justify-center rounded-full shadow-md ${getComputerChoiceClass(computerChoice)}`}
           >
             {computerChoice && choices.find((choice) => choice.name === computerChoice).icon}
           </div>
-          <p className="font-medium text-gray-200 mt-4 text-lg">
+          <p className="font-medium text-gray-200 mt-4 text-sm md:text-lg">
             {computerChoice || "Waiting..."}
           </p>
         </div>
 
         {/* User Section */}
-        <div className='bg-gray-600 shadow-lg rounded-lg w-[50%] h-80 flex flex-col items-center justify-center p-6 border-2 border-gray-500'>
-          <p className="font-semibold text-lg mb-4 text-gray-300">Your Choices</p>
-          <div className="flex gap-6">
+        <div className='bg-gray-600 shadow-lg rounded-lg w-full md:w-[50%] h-80 flex flex-col items-center justify-center p-4 md:p-6 border-2 border-gray-500'>
+          <p className="font-semibold text-md md:text-lg mb-4 text-gray-300">Your Choices</p>
+          <div className="flex gap-4 md:gap-6">
             {choices.map((item) => (
               <div
                 key={item.name}
-                className={`w-24 h-24 flex items-center justify-center rounded-full shadow-md cursor-pointer hover:scale-105 transition-transform ${getUserChoiceClass(item.name)}`}
+                className={`w-20 md:w-24 h-20 md:h-24 flex items-center justify-center rounded-full shadow-md cursor-pointer hover:scale-105 transition-transform ${getUserChoiceClass(item.name)}`}
                 onClick={() => handleChange(item.name)}
               >
                 {item.icon}
@@ -84,12 +86,12 @@ const RockPaper = () => {
       </div>
 
       {/* Result Section */}
-      <div className="mt-8 flex justify-center">
+      <div className="mt-6 md:mt-8 flex justify-center w-full">
         {result.message && (
           <div
-            className={`p-6 shadow-xl rounded-lg bg-gray-700 text-center w-[90%] md:w-[80%] lg:w-[70%] transition-transform duration-300 ease-in-out border-2 border-gray-600 ${result.color}`}
+            className={`p-4 md:p-6 shadow-xl rounded-lg bg-gray-700 text-center w-[90%] md:w-[80%] lg:w-[70%] transition-transform duration-300 ease-in-out border-2 border-gray-600 ${result.color}`}
           >
-            <p className="text-2xl font-bold">{result.message}</p>
+            <p className="text-lg md:text-2xl font-bold">{result.message}</p>
             {result.message.includes("You Won!") && confetti}
           </div>
         )}
